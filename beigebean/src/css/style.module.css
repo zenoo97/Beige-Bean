@@ -87,3 +87,24 @@ li {
 .visible {
   display: none;
 }
+
+/* Login.js */
+.signUpFirst {
+}
+
+.signUpMain {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.signUpTitle {
+  display: flex;
+  justify-content: center;
+}
+.signUpForm {
+  justify-content: space-between;
+  align-items: center;
+}
+.signUpButton {
+  display: flex;
+}
