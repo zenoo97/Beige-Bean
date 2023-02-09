@@ -1,13 +1,9 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import styles from "../css/style.module.css";
-import { AiOutlineMenu } from "react-icons/ai";
-import { BsFillPersonFill } from "react-icons/bs";
-const Main = () => {
-  const [select, setSelect] = useState("coffee");
+import { Link } from "react-router-dom";
+const MainPage = () => {
   const [visible, setVisible] = useState(false);
-  const onClick = () => {
-    setVisible((current) => !current);
-  };
   return (
     <div className={styles.main}>
       <div className={styles.title_main}>
@@ -19,12 +15,12 @@ const Main = () => {
       </div>
 
       <ul className={styles.menu_sub}>
-        <li>
-          <BsFillPersonFill />
-        </li>
-        <li>
-          <AiOutlineMenu onClick={onClick} />
-        </li>
+        <Link to="/signin">
+          <li>로그인</li>
+        </Link>
+        <Link to="/signup">
+          <li>회원가입</li>
+        </Link>
       </ul>
       {/* 메뉴 토글 버튼 */}
       <div className={visible ? styles.menu_toggle_main : styles.visible}>
@@ -86,4 +82,4 @@ const Main = () => {
     </div>
   );
 };
-export default Main;
+export default MainPage;

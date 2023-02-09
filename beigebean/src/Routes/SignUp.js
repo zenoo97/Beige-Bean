@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "../css/style.module.css";
-
+import { MultiFactorInfo } from "firebase/auth";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
@@ -14,7 +14,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-const Login = () => {
+
+const SignUp = () => {
   // Initialize Firebase
   const firebaseConfig = {
     apiKey: "AIzaSyCoCdU09nQ8c0xxwS2Lv-vH0Lq-H2YqJ2k",
@@ -32,6 +33,7 @@ const Login = () => {
   //   signUp 기본 설정
   const [signUpEmail, setSignUpEmail] = useState("");
   const [signUpPassword, setSignUpPassword] = useState("");
+  const [failOrSucc, setFailOrSucc] = useState("false");
   const signUpEmailChange = (event) => {
     setSignUpEmail(event.target.value);
     console.log(signUpEmail);
@@ -56,63 +58,26 @@ const Login = () => {
         // ..
       });
   };
-  const signIn = (event) => {
-    event.preventDefault();
 
-    signInWithEmailAndPassword(auth, signUpEmail, signUpPassword)
-      .then((userCredential) => {
-        // Signed in
-        console.log(userCredential);
-        const user = userCredential.user;
-        // ...
-      })
-      .catch((error) => {
-        console.log(error);
-        const errorCode = error.code;
-        const errorMessage = error.message;
-      });
-  };
-
-  console.log(app);
   return (
-    <div className={styles.signUpFirst}>
-      <div className={styles.signUpMain}>
-        <form className={styles.signUpForm} onSubmit={signUp}>
-          <h1 className={styles.signUpTitle}>회원가입</h1>
-          <div>
-            email:{" "}
-            <input id="signUpEmail" type="email" onChange={signUpEmailChange} />
-          </div>
-          <div>
-            password:{" "}
-            <input
-              id="signUpPassword"
-              type="password"
-              onChange={signUpPasswordChange}
-            />
-          </div>
-          <button type="submit">회원가입</button>
-        </form>
-      </div>
-      <div className={styles.signUpMain}>
-        <form className={styles.signUpForm} onSubmit={signIn}>
-          <h1 className={styles.signUpTitle}>로그인</h1>
-          <div>
-            email:{" "}
-            <input id="signInEmail" type="email" onChange={signUpEmailChange} />
-          </div>
-          <div>
-            password:{" "}
-            <input
-              id="signInPassword"
-              type="password"
-              onChange={signUpPasswordChange}
-            />
-          </div>
-          <button type="submit">로그인</button>
-        </form>
-      </div>
+    <div className={styles.signUpMain}>
+      <form className={styles.signUpForm} onSubmit={signUp}>
+        <h1 className={styles.signUpTitle}>회원가입</h1>
+        <div>
+          email:{" "}
+          <input id="signUpEmail" type="email" onChange={signUpEmailChange} />
+        </div>
+        <div>
+          password:{" "}
+          <input
+            id="signUpPassword"
+            type="password"
+            onChange={signUpPasswordChange}
+          />
+        </div>
+        <button type="submit">회원가입</button>
+      </form>
     </div>
   );
 };
-export default Login;
+export default SignUp;

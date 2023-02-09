@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "../css/style.module.css";
-
+import { MultiFactorInfo } from "firebase/auth";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
@@ -9,12 +9,10 @@ import { getAnalytics } from "firebase/analytics";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-const Login = () => {
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { Link } from "react-router-dom";
+import MainPage from "../components/MainPage";
+const SignIn = () => {
   // Initialize Firebase
   const firebaseConfig = {
     apiKey: "AIzaSyCoCdU09nQ8c0xxwS2Lv-vH0Lq-H2YqJ2k",
@@ -32,6 +30,7 @@ const Login = () => {
   //   signUp 기본 설정
   const [signUpEmail, setSignUpEmail] = useState("");
   const [signUpPassword, setSignUpPassword] = useState("");
+  const [sucOrFailLogin, setSucOrFailSucLogin] = useState(false);
   const signUpEmailChange = (event) => {
     setSignUpEmail(event.target.value);
     console.log(signUpEmail);
@@ -40,22 +39,7 @@ const Login = () => {
     setSignUpPassword(event.target.value);
     console.log(signUpPassword);
   };
-  const signUp = (event) => {
-    event.preventDefault();
 
-    createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword)
-      .then((userCredential) => {
-        // Signed in
-        console.log(userCredential);
-        const user = userCredential.user;
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
-      });
-  };
   const signIn = (event) => {
     event.preventDefault();
 
@@ -64,6 +48,11 @@ const Login = () => {
         // Signed in
         console.log(userCredential);
         const user = userCredential.user;
+        if (sucOrFailLogin === false) {
+          setSucOrFailSucLogin((curr) => !curr);
+        }
+        console.log(sucOrFailLogin);
+
         // ...
       })
       .catch((error) => {
@@ -72,28 +61,10 @@ const Login = () => {
         const errorMessage = error.message;
       });
   };
-
+  const loginClick = () => {};
   console.log(app);
   return (
     <div className={styles.signUpFirst}>
-      <div className={styles.signUpMain}>
-        <form className={styles.signUpForm} onSubmit={signUp}>
-          <h1 className={styles.signUpTitle}>회원가입</h1>
-          <div>
-            email:{" "}
-            <input id="signUpEmail" type="email" onChange={signUpEmailChange} />
-          </div>
-          <div>
-            password:{" "}
-            <input
-              id="signUpPassword"
-              type="password"
-              onChange={signUpPasswordChange}
-            />
-          </div>
-          <button type="submit">회원가입</button>
-        </form>
-      </div>
       <div className={styles.signUpMain}>
         <form className={styles.signUpForm} onSubmit={signIn}>
           <h1 className={styles.signUpTitle}>로그인</h1>
@@ -115,4 +86,4 @@ const Login = () => {
     </div>
   );
 };
-export default Login;
+export default SignIn;
